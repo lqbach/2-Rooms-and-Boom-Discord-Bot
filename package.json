@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon .",
-    "start": "node ."
+    "test": "nodemon index.js",
+    "start": "node index.js"
   },
   "author": "Long-Quan Bach",
   "license": "ISC",
