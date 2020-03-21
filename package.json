@@ -10,7 +10,8 @@
   "author": "Long-Quan Bach",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^12.0.2"
+    "discord.js": "^12.0.2",
+    "dotenv": "^8.2.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"

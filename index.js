@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+require('dotenv').config();
 const client = new Discord.Client();
 
 const token = process.env.BOT_TOKEN;
@@ -41,7 +42,7 @@ client.on('message', (msg)=>{
         if(msg.content === "!join"){
             console.log(msg.author)
             players.push(msg.author);
-            msg.channel.send('Players in Queue are: \n' + players.map(player => ' - <@' + player.id + '>\n')).join('');
+            msg.channel.send('Players in Queue are: \n' + players.map(player => ' - <@' + player.id + '>\n').join(''));
         }
 
         else if(msg.content === "!leave"){
@@ -49,11 +50,11 @@ client.on('message', (msg)=>{
             if(index > -1){
                 players.splice(index, 1);
             }
-            msg.channel.send('Players in Queue are: \n' + players.map(player => ' - <@' + player.id + '>\n')).join('');
+            msg.channel.send('Players in Queue are: \n' + players.map(player => ' - <@' + player.id + '>\n').join(''));
         }
 
         if(msg.content === "!queue"){
-            msg.channel.send('Players in Queue are: \n' + players.map(player => ' - <@' + player.id + '>\n')).join('');
+            msg.channel.send('Players in Queue are: \n' + players.map(player => ' - <@' + player.id + '>\n').join(''));
         }
 
         //TODO: write continue
