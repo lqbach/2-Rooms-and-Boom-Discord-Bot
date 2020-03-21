@@ -41,7 +41,7 @@ client.on('message', (msg)=>{
         if(msg.content === "!join"){
             console.log(msg.author)
             players.push(msg.author);
-            msg.channel.send('Players in Queue are: \n' + players.map(player => ' - <@' + player.id + '>\n'));
+            msg.channel.send('Players in Queue are: \n' + players.map(player => ' - <@' + player.id + '>\n')).join('');
         }
 
         else if(msg.content === "!leave"){
@@ -49,11 +49,11 @@ client.on('message', (msg)=>{
             if(index > -1){
                 players.splice(index, 1);
             }
-            msg.channel.send('Players in Queue are: \n' + players.map(player => ' - <@' + player.id + '>\n'));
+            msg.channel.send('Players in Queue are: \n' + players.map(player => ' - <@' + player.id + '>\n')).join('');
         }
 
         if(msg.content === "!queue"){
-            msg.channel.send('Players in Queue are: \n' + players.map(player => ' - <@' + player.id + '>\n'));
+            msg.channel.send('Players in Queue are: \n' + players.map(player => ' - <@' + player.id + '>\n')).join('');
         }
 
         //TODO: write continue
@@ -61,36 +61,38 @@ client.on('message', (msg)=>{
             if(players.length < 6){
                 msg.channel.send('Not enough players in Queue to start the game!');
             }
-
-            msg.channel.send('Starting the game!');
-            msg.channel.send('Prepare to play, and check your DMs for your roles! The people playing are: \n' + players.map(player => ' - <@' + player.id + '>\n'));
-
-            timer = 3;
-            ingame = true;
-
-            //send roles to players
-            shuffle(players);
-
-            let characters = Array.from(players);
-
-            characters.pop().send('You are the President! You are on the blue team. Don\'t get placed in the same room as the bomber!');
-            characters.pop().send('You are the Bomber! You are on the red team. ALLAHU AKBAR KILL THE PRESIDENT!');
-
-            if(characters.length%2 != 0) {
-                characters.pop().send('You are the Gambler! At the end of the 3 rounds, try to guess which team won!');
+            
+            else{
+                msg.channel.send('Starting the game!');
+                msg.channel.send('Prepare to play, and check your DMs for your roles! The people playing are: \n' + players.map(player => ' - <@' + player.id + '>\n'));
+    
+                timer = 3;
+                ingame = true;
+    
+                //send roles to players
+                shuffle(players);
+    
+                let characters = Array.from(players);
+    
+                characters.pop().send('You are the President! You are on the blue team. Don\'t get placed in the same room as the bomber!');
+                characters.pop().send('You are the Bomber! You are on the red team. ALLAHU AKBAR KILL THE PRESIDENT!');
+    
+                if(characters.length%2 != 0) {
+                    characters.pop().send('You are the Gambler! At the end of the 3 rounds, try to guess which team won!');
+                }
+    
+                toggle = true;
+                characters.map(character => {
+                    if(toggle){
+                        character.send('You are on the blue team!');
+                        toggle = false;
+                    }
+                    else{
+                        character.send('You are on the red team!');
+                        toggle = true;
+                    }
+                })
             }
-
-            toggle = true;
-            characters.map(character => {
-                if(toggle){
-                    character.send('You are on the blue team!');
-                    toggle = false;
-                }
-                else{
-                    character.send('You are on the red team!');
-                    toggle = true;
-                }
-            })
 
         }
     }
