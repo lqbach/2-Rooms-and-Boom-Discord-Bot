@@ -147,7 +147,6 @@ client.on('message', (msg)=>{
             if(int != null){
                 clearInterval(int);
             }
-            players = [];
             timeout = false;
             timer = 3;
             ingame = false;
