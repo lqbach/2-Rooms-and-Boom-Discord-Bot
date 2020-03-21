@@ -1,0 +1,18 @@
+{
+  "name": "two-room-and-boom-discordbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon .",
+    "start": "node ."
+  },
+  "author": "Long-Quan Bach",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
