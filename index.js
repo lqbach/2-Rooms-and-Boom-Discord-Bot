@@ -68,7 +68,7 @@ client.on('message', (msg)=>{
             
             else{
                 msg.channel.send('Starting the game!');
-                msg.channel.send('Prepare to play, and check your DMs for your roles! The people playing are: \n' + players.map(player => ' - <@' + player.id + '>\n'));
+                msg.channel.send('Prepare to play, and check your DMs for your roles! The people playing are: \n' + players.map(player => ' - <@' + player.id + '>\n').join(''));
     
                 timer = 3;
                 ingame = true;
@@ -147,6 +147,7 @@ client.on('message', (msg)=>{
             if(int != null){
                 clearInterval(int);
             }
+            players = [];
             timeout = false;
             timer = 3;
             ingame = false;
