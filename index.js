@@ -35,6 +35,7 @@ client.on('message', (msg)=>{
             '!join      - join the Queue for the game\n' +
             '!leave     - leave the Queue for the game\n' +
             '!queue     - check who is in the Queue\n' +
+            '!refresh   - refreshes the Queue\n' +
             '!startgame - starts the game. Only works when there are 6 players!\n' +
             '!timer     - there are 3 timers. Starts the countdown for the current timer\n' +
             '!endgame   - ends the current game. Restarts the timers.' 
