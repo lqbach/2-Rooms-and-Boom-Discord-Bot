@@ -21,12 +21,16 @@ function shuffle(array) {
     }
 }
 
+function printPlayers(){
+    return players.map(player => ' - <@' + player.id + '>\n').join('')
+}
+
 client.on('ready', () => {
     console.log('Bot is online!')
 })
 
 client.on('message', (msg)=>{
-    if(msg.content === "!help"){
+    if(msg.content === '!help'){
         msg.channel.send('Hello degenerates! I am a Discord bot that can help faciliate the game of 2 Rooms and Boom. Here are a list of my commands: \n' + 
             '!join      - join the Queue for the game\n' +
             '!leave     - leave the Queue for the game\n' +
@@ -39,36 +43,40 @@ client.on('message', (msg)=>{
 
     //commands for if the game hasn't started yet
     if(!ingame){
-        if(msg.content === "!join"){
+        if(msg.content === '!join'){
             console.log(msg.author)
             let index = players.indexOf(msg.author);
             if(index == -1){
                 players.push(msg.author);
             }
-            msg.channel.send('Players in Queue are: \n' + players.map(player => ' - <@' + player.id + '>\n').join(''));
+            msg.channel.send('Players in Queue are: \n' + printPlayers());
         }
 
-        else if(msg.content === "!leave"){
+        else if(msg.content === '!leave'){
             let index = players.indexOf(msg.author);
             if(index > -1){
                 players.splice(index, 1);
             }
-            msg.channel.send('Players in Queue are: \n' + players.map(player => ' - <@' + player.id + '>\n').join(''));
+            msg.channel.send('Players in Queue are: \n' + printPlayers());
         }
 
-        if(msg.content === "!queue"){
-            msg.channel.send('Players in Queue are: \n' + players.map(player => ' - <@' + player.id + '>\n').join(''));
+        if(msg.content === '!queue'){
+            msg.channel.send('Players in Queue are: \n' + printPlayers());
         }
 
-        //TODO: write continue
-        if(msg.content === "!startgame"){
+        if(msg.content === '!refresh'){
+            players.length = 0;
+            msg.channel.send('Queue reset.');
+        }
+
+        if(msg.content === '!startgame'){
             if(players.length < 6){
                 msg.channel.send('Not enough players in Queue to start the game!');
             }
             
             else{
                 msg.channel.send('Starting the game!');
-                msg.channel.send('Prepare to play, and check your DMs for your roles! The people playing are: \n' + players.map(player => ' - <@' + player.id + '>\n'));
+                msg.channel.send('Prepare to play, and check your DMs for your roles! The people playing are: \n' + printPlayers());
     
                 timer = 3;
                 ingame = true;
@@ -102,7 +110,7 @@ client.on('message', (msg)=>{
     }
 
     else {
-        if(msg.content === "!timer"){
+        if(msg.content === '!timer'){
             if(timeout) {
                 msg.channel.send('A timer is in session: ' + seconds+'s left on the timer.');
             }
@@ -142,7 +150,7 @@ client.on('message', (msg)=>{
             }
         }
 
-        if(msg.content === "!endgame"){
+        if(msg.content === '!endgame'){
             msg.channel.send('Ending the game. Timers and roles restarted.');
             if(int != null){
                 clearInterval(int);
