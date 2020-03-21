@@ -41,7 +41,10 @@ client.on('message', (msg)=>{
     if(!ingame){
         if(msg.content === "!join"){
             console.log(msg.author)
-            players.push(msg.author);
+            let index = players.indexOf(msg.author);
+            if(index == -1){
+                players.push(msg.author);
+            }
             msg.channel.send('Players in Queue are: \n' + players.map(player => ' - <@' + player.id + '>\n').join(''));
         }
 
