@@ -48,21 +48,26 @@ function sendRoles() {
         characters.pop().send('You are the Gambler! At the end of the 3 rounds, try to guess which team won!');
     }
 
-    for (color in extraRoles.keys()) {
-        extraRoles[color].forEach(role => {
-            characters.pop().send(`You are on the ${color} team! You have the role of ${role}.`);
-        })
+
+    for (color in Object.keys(extraRoles)) {
+        if(extraRoles[color] !== undefined){
+            extraRoles[color].forEach(role => {
+                characters.pop().send(`You are on the ${color} team! You have the role of ${role}.`);
+            });
+        }
     }
 
     color = true;
-    characters.forEach(character => {
-        character.send(`You are on the ${color ? 'blue' : 'red'} team! You have no special role.`);
-        color = !color;
-    })
+    if(characters !== undefined){
+        characters.forEach(character => {
+            character.send(`You are on the ${color ? 'blue' : 'red'} team! You have no special role.`);
+            color = !color;
+        })
+    }
 }
 
 client.on('ready', () => {
-    console.log('Bot is online!')
+    console.log('Bot is online!');
 })
 
 client.on('message', (msg)=>{
@@ -81,7 +86,6 @@ client.on('message', (msg)=>{
     //commands for if the game hasn't started yet
     if(!ingame){
         if(msg.content === '!join'){
-            console.log(msg.author)
             let index = players.indexOf(msg.author);
             if(index == -1){
                 players.push(msg.author);
@@ -143,6 +147,66 @@ client.on('message', (msg)=>{
         }
 
         if(msg.content === '!startgame'){
+
+            // players = [
+
+            //     {
+            //         id: '97838934062534656',
+            //         bot: false,
+            //         username: 'Quanny',
+            //         discriminator: '2251',
+            //         avatar: 'ff8ea803ed1263aeb34b72c578a61df4',
+            //         lastMessageID: '691137653441036298',
+            //         lastMessageChannelID: '691015062370123866' 
+            //     },
+            //     {
+            //         id: '97838934062534656',
+            //         bot: false,
+            //         username: 'Quanny',
+            //         discriminator: '2251',
+            //         avatar: 'ff8ea803ed1263aeb34b72c578a61df4',
+            //         lastMessageID: '691137653441036298',
+            //         lastMessageChannelID: '691015062370123866' 
+            //     },
+            //     {
+            //         id: '97838934062534656',
+            //         bot: false,
+            //         username: 'Quanny',
+            //         discriminator: '2251',
+            //         avatar: 'ff8ea803ed1263aeb34b72c578a61df4',
+            //         lastMessageID: '691137653441036298',
+            //         lastMessageChannelID: '691015062370123866' 
+            //     },
+            //     {
+            //         id: '97838934062534656',
+            //         bot: false,
+            //         username: 'Quanny',
+            //         discriminator: '2251',
+            //         avatar: 'ff8ea803ed1263aeb34b72c578a61df4',
+            //         lastMessageID: '691137653441036298',
+            //         lastMessageChannelID: '691015062370123866' 
+            //     },
+            //     {
+            //         id: '97838934062534656',
+            //         bot: false,
+            //         username: 'Quanny',
+            //         discriminator: '2251',
+            //         avatar: 'ff8ea803ed1263aeb34b72c578a61df4',
+            //         lastMessageID: '691137653441036298',
+            //         lastMessageChannelID: '691015062370123866' 
+            //     },
+            //     {
+            //         id: '97838934062534656',
+            //         bot: false,
+            //         username: 'Quanny',
+            //         discriminator: '2251',
+            //         avatar: 'ff8ea803ed1263aeb34b72c578a61df4',
+            //         lastMessageID: '691137653441036298',
+            //         lastMessageChannelID: '691015062370123866' 
+            //     },
+
+            // ]
+            
             if(players.length < 6){
                 msg.channel.send('Not enough players in Queue to start the game!');
             } else if (numRoles > players.length - 2) {
@@ -153,7 +217,7 @@ client.on('message', (msg)=>{
     
                 timer = 3;
                 ingame = true;
-    
+
                 sendRoles();
             }
 
