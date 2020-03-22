@@ -28,7 +28,7 @@ function printPlayers(){
 }
 
 function printRoles(){
-    roles = '';
+    let roles = '';
     roles += 'Blue:\n' + extraRoles.blue.map(role => ' - ' + role'\n').join('');
     roles += 'Red:\n' + extraRoles.red.map(role => ' - ' + role'\n').join('');
     roles += 'Grey:\n' + extraRoles.grey.map(role => ' - ' + role'\n').join('');
@@ -102,9 +102,9 @@ client.on('message', (msg)=>{
         }
 
         if(msg.content.includes('!addrole')){
-            info = msg.content.split();
-            color = info[1];
-            role = info[2];
+            let info = msg.content.split();
+            let color = info[1];
+            let role = info[2];
 
             if (color === 'blue') {
                 extraRoles.blue.push(role);
