@@ -6,7 +6,7 @@ const token = process.env.BOT_TOKEN;
 
 let players = [];
 
-let extraRoles = {red: [], blue: [], grey: []};
+let extraRoles = {blue: [], red: [], grey: []};
 let numRoles = 0;
 
 let timeout = false;
@@ -27,6 +27,14 @@ function printPlayers(){
     return players.map(player => ' - <@' + player.id + '>\n').join('')
 }
 
+function printRoles(){
+    roles = '';
+    roles += 'Blue:\n' + extraRoles.blue.map(role => ' - ' + role'\n').join('');
+    roles += 'Red:\n' + extraRoles.red.map(role => ' - ' + role'\n').join('');
+    roles += 'Grey:\n' + extraRoles.grey.map(role => ' - ' + role'\n').join('');
+    return roles;
+}
+
 function sendRoles() {
     //send roles to players
 
@@ -40,9 +48,15 @@ function sendRoles() {
         characters.pop().send('You are the Gambler! At the end of the 3 rounds, try to guess which team won!');
     }
 
+    for (color in extraRoles.keys()) {
+        extraRoles[color].forEach(role => {
+            characters.pop().send(`You are on the ${color} team! You have the role of ${role}.`);
+        })
+    }
+
     color = true;
     characters.forEach(character => {
-        character.send(`You are on the ${color ? 'blue' : 'red'} team!`);
+        character.send(`You are on the ${color ? 'blue' : 'red'} team! You have no special role.`);
         color = !color;
     })
 }
@@ -88,11 +102,33 @@ client.on('message', (msg)=>{
         }
 
         if(msg.content.includes('!addrole')){
-            
+            info = msg.content.split();
+            color = info[1];
+            role = info[2];
+
+            if (color === 'blue') {
+                extraRoles.blue.push(role);
+                numRoles++;
+            } else if (color === 'red') {
+                extraRoles.red.push(role);
+                numRoles++;
+            } else if (color === 'grey') {
+                extraRoles.grey.push(role);
+                numRoles++;
+            } else if (color === 'both') {
+                extraRoles.blue.push(role);
+                extraRoles.red.push(role);
+                numRoles += 2;
+            } else {
+                msg.channel.send('Color not recognized');
+            }
+
+            msg.channel.send('Roles in game are: \n' + printRoles());
+
         }
 
-        if(msg.content.includes('!removerole')){
-            
+        if(msg.content === '!roles'){
+            msg.channel.send('Roles in game are: \n' + printRoles());
         }
 
         if(msg.content === '!clearroles'){
@@ -109,9 +145,9 @@ client.on('message', (msg)=>{
         if(msg.content === '!startgame'){
             if(players.length < 6){
                 msg.channel.send('Not enough players in Queue to start the game!');
-            }
-            
-            else{
+            } else if (numRoles > players.length - 2) {
+                msg.channel.send('More roles than player in Queue. Please remove roles or add more players!');
+            } else {
                 msg.channel.send('Starting the game!');
                 msg.channel.send('Prepare to play, and check your DMs for your roles! The people playing are: \n' + printPlayers());
     
