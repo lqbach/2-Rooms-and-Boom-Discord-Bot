@@ -29,9 +29,9 @@ function printPlayers(){
 
 function printRoles(){
     let roles = '';
-    roles += 'Blue:\n' + extraRoles.blue.map(role => ' - ' + role'\n').join('');
-    roles += 'Red:\n' + extraRoles.red.map(role => ' - ' + role'\n').join('');
-    roles += 'Grey:\n' + extraRoles.grey.map(role => ' - ' + role'\n').join('');
+    roles += 'Blue:\n' + extraRoles.blue.map(role => ' - ' + role + '\n').join('');
+    roles += 'Red:\n' + extraRoles.red.map(role => ' - ' + role + '\n').join('');
+    roles += 'Grey:\n' + extraRoles.grey.map(role => ' - ' + role + '\n').join('');
     return roles;
 }
 
