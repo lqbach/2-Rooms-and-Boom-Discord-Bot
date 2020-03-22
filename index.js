@@ -120,7 +120,7 @@ client.on('message', (msg)=>{
                 extraRoles.red.push(role);
                 numRoles += 2;
             } else {
-                msg.channel.send('Color not recognized');
+                msg.channel.send(`Color '${color}' not recognized`);
             }
 
             msg.channel.send('Roles in game are: \n' + printRoles());
