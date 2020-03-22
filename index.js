@@ -6,13 +6,15 @@ const token = process.env.BOT_TOKEN;
 
 let players = [];
 
-let blueCharacters = [];
-let redCharacters = [];
+let extraRoles = {red: [], blue: [], grey: []};
+let numRoles = 0;
+
 let timeout = false;
-let ingame = false;
 let timer = 3;
 let seconds = 0;
 let int = null;
+
+let ingame = false;
 
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -23,6 +25,26 @@ function shuffle(array) {
 
 function printPlayers(){
     return players.map(player => ' - <@' + player.id + '>\n').join('')
+}
+
+function sendRoles() {
+    //send roles to players
+
+    let characters = Array.from(players);
+    shuffle(characters);
+
+    characters.pop().send('You are the President! You are on the blue team. Don\'t get placed in the same room as the bomber!');
+    characters.pop().send('You are the Bomber! You are on the red team. KILL THE PRESIDENT!');
+
+    if(characters.length % 2 != 0) {
+        characters.pop().send('You are the Gambler! At the end of the 3 rounds, try to guess which team won!');
+    }
+
+    color = true;
+    characters.forEach(character => {
+        character.send(`You are on the ${color ? 'blue' : 'red'} team!`);
+        color = !color;
+    })
 }
 
 client.on('ready', () => {
@@ -65,6 +87,20 @@ client.on('message', (msg)=>{
             msg.channel.send('Players in Queue are: \n' + printPlayers());
         }
 
+        if(msg.content.includes('!addrole')){
+            
+        }
+
+        if(msg.content.includes('!removerole')){
+            
+        }
+
+        if(msg.content === '!clearroles'){
+            extraRoles = {red: [], blue: [], grey: []};
+            numRoles = 0;
+            msg.channel.send('Roles reset.');
+        }
+
         if(msg.content === '!refresh'){
             players.length = 0;
             msg.channel.send('Queue reset.');
@@ -82,29 +118,7 @@ client.on('message', (msg)=>{
                 timer = 3;
                 ingame = true;
     
-                //send roles to players
-                shuffle(players);
-    
-                let characters = Array.from(players);
-    
-                characters.pop().send('You are the President! You are on the blue team. Don\'t get placed in the same room as the bomber!');
-                characters.pop().send('You are the Bomber! You are on the red team. ALLAHU AKBAR KILL THE PRESIDENT!');
-    
-                if(characters.length%2 != 0) {
-                    characters.pop().send('You are the Gambler! At the end of the 3 rounds, try to guess which team won!');
-                }
-    
-                toggle = true;
-                characters.map(character => {
-                    if(toggle){
-                        character.send('You are on the blue team!');
-                        toggle = false;
-                    }
-                    else{
-                        character.send('You are on the red team!');
-                        toggle = true;
-                    }
-                })
+                sendRoles();
             }
 
         }
