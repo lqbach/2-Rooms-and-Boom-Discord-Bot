@@ -102,7 +102,7 @@ client.on('message', (msg)=>{
         }
 
         if(msg.content.includes('!addrole')){
-            let info = msg.content.split();
+            let info = msg.content.split(" ");
             let color = info[1];
             let role = info[2];
 
@@ -120,7 +120,7 @@ client.on('message', (msg)=>{
                 extraRoles.red.push(role);
                 numRoles += 2;
             } else {
-                msg.channel.send(`Color '${color}' not recognized`);
+                msg.channel.send(`Color not recognized`);
             }
 
             msg.channel.send('Roles in game are: \n' + printRoles());
