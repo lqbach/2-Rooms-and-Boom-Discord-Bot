@@ -90,9 +90,9 @@ client.on('message', (msg)=>{
             let index = players.indexOf(msg.author);
 
             //comment this out to test
-            // if(index == -1){
+            if(index == -1){
                 players.push(msg.author);
-            // }
+            }
             msg.channel.send('Players in Queue are: \n' + printPlayers());
         }
 
