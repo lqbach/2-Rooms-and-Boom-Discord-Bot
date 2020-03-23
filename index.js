@@ -48,14 +48,11 @@ function sendRoles() {
         characters.pop().send('You are the Gambler! At the end of the 3 rounds, try to guess which team won!');
     }
 
-
-    for (color in Object.keys(extraRoles)) {
-        if(extraRoles[color] !== undefined){
-            extraRoles[color].forEach(role => {
-                characters.pop().send(`You are on the ${color} team! You have the role of ${role}.`);
-            });
-        }
-    }
+    Object.keys(extraRoles).forEach(color => {
+        extraRoles[color].forEach(role => {
+            characters.pop().send(`You are on the ${color} team! You have the role of ${role}.`);
+        })
+    })
 
     color = true;
     if(characters !== undefined){
@@ -83,13 +80,19 @@ client.on('message', (msg)=>{
         );
     }
 
+    if(msg.content === '!sendnudes'){
+        msg.reply('B-..Ba-...Baa-...Baaka! Hentai! Don\'t do me dirty like that senpai!');
+    }
+
     //commands for if the game hasn't started yet
     if(!ingame){
         if(msg.content === '!join'){
             let index = players.indexOf(msg.author);
-            if(index == -1){
+
+            //comment this out to test
+            // if(index == -1){
                 players.push(msg.author);
-            }
+            // }
             msg.channel.send('Players in Queue are: \n' + printPlayers());
         }
 
@@ -148,65 +151,6 @@ client.on('message', (msg)=>{
 
         if(msg.content === '!startgame'){
 
-            // players = [
-
-            //     {
-            //         id: '97838934062534656',
-            //         bot: false,
-            //         username: 'Quanny',
-            //         discriminator: '2251',
-            //         avatar: 'ff8ea803ed1263aeb34b72c578a61df4',
-            //         lastMessageID: '691137653441036298',
-            //         lastMessageChannelID: '691015062370123866' 
-            //     },
-            //     {
-            //         id: '97838934062534656',
-            //         bot: false,
-            //         username: 'Quanny',
-            //         discriminator: '2251',
-            //         avatar: 'ff8ea803ed1263aeb34b72c578a61df4',
-            //         lastMessageID: '691137653441036298',
-            //         lastMessageChannelID: '691015062370123866' 
-            //     },
-            //     {
-            //         id: '97838934062534656',
-            //         bot: false,
-            //         username: 'Quanny',
-            //         discriminator: '2251',
-            //         avatar: 'ff8ea803ed1263aeb34b72c578a61df4',
-            //         lastMessageID: '691137653441036298',
-            //         lastMessageChannelID: '691015062370123866' 
-            //     },
-            //     {
-            //         id: '97838934062534656',
-            //         bot: false,
-            //         username: 'Quanny',
-            //         discriminator: '2251',
-            //         avatar: 'ff8ea803ed1263aeb34b72c578a61df4',
-            //         lastMessageID: '691137653441036298',
-            //         lastMessageChannelID: '691015062370123866' 
-            //     },
-            //     {
-            //         id: '97838934062534656',
-            //         bot: false,
-            //         username: 'Quanny',
-            //         discriminator: '2251',
-            //         avatar: 'ff8ea803ed1263aeb34b72c578a61df4',
-            //         lastMessageID: '691137653441036298',
-            //         lastMessageChannelID: '691015062370123866' 
-            //     },
-            //     {
-            //         id: '97838934062534656',
-            //         bot: false,
-            //         username: 'Quanny',
-            //         discriminator: '2251',
-            //         avatar: 'ff8ea803ed1263aeb34b72c578a61df4',
-            //         lastMessageID: '691137653441036298',
-            //         lastMessageChannelID: '691015062370123866' 
-            //     },
-
-            // ]
-            
             if(players.length < 6){
                 msg.channel.send('Not enough players in Queue to start the game!');
             } else if (numRoles > players.length - 2) {
